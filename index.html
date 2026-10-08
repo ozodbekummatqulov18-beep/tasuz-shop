@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasuz Shop | Modern Transparent Store</title>
+    <meta name="description" content="Modern transparent e-commerce shop with floating cart, PayMe demo flow, and premium products." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="promo">Free delivery for orders over $120 • New season collection is live</div>
+      </header>
+
+      <nav class="navbar container">
+        <div class="brand-wrap">
+          <div class="brand-mark">T</div>
+          <div>
+            <div class="brand-name">TASUZ</div>
+            <div class="brand-sub">SHOP</div>
+          </div>
+        </div>
+
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#shop">Shop</a>
+          <a href="#new">New</a>
+          <a href="#sale">Sale</a>
+          <a href="#about">About</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="icon-btn" aria-label="Search">⌕</button>
+          <button class="icon-btn" id="openCartBtn" aria-label="Cart">
+            🛒 <span id="cartBadge">0</span>
+          </button>
+        </div>
+      </nav>
+
+      <main id="home">
+        <section class="hero container">
+          <div class="hero-copy glass-panel">
+            <span class="eyebrow">New collection</span>
+            <h1>Style your everyday with modern essentials.</h1>
+            <p>
+              Premium accessories, fashion basics, and tech essentials designed for a cleaner,
+              more expressive lifestyle.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-btn" href="#shop">Shop now</a>
+              <a class="secondary-btn" href="#new">Explore new</a>
+            </div>
+            <ul class="hero-metrics">
+              <li><strong>25k+</strong><span>happy shoppers</span></li>
+              <li><strong>4.9/5</strong><span>average rating</span></li>
+              <li><strong>48h</strong><span>fast dispatch</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-visual glass-panel">
+            <div class="product-showcase">
+              <div class="floating-tag tag-one">New</div>
+              <div class="floating-tag tag-two">-30%</div>
+              <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Premium product showcase" />
+              <div class="showcase-card">
+                <span>Signature Set</span>
+                <strong>$149</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-strip container">
+          <div class="feature-item glass-panel">
+            <span class="feature-icon">⚡</span>
+            <div>
+              <strong>Fast shipping</strong>
+              <small>Across Uzbekistan</small>
+            </div>
+          </div>
+          <div class="feature-item glass-panel">
+            <span class="feature-icon">🔒</span>
+            <div>
+              <strong>Secure checkout</strong>
+              <small>PayMe demo ready</small>
+            </div>
+          </div>
+          <div class="feature-item glass-panel">
+            <span class="feature-icon">♻️</span>
+            <div>
+              <strong>Eco packaging</strong>
+              <small>Reusable design</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="categories container" id="new">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Browse categories</span>
+              <h2>Find your style</h2>
+            </div>
+            <a href="#shop" class="text-link">See all</a>
+          </div>
+
+          <div class="category-grid">
+            <div class="category-card glass-panel">
+              <span>Accessories</span>
+              <strong>120 items</strong>
+            </div>
+            <div class="category-card glass-panel">
+              <span>Tech</span>
+              <strong>84 items</strong>
+            </div>
+            <div class="category-card glass-panel">
+              <span>Wearables</span>
+              <strong>56 items</strong>
+            </div>
+            <div class="category-card glass-panel">
+              <span>Home</span>
+              <strong>72 items</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="shop container" id="shop">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Trending now</span>
+              <h2>New arrivals</h2>
+            </div>
+            <div class="shop-tools">
+              <input id="searchInput" type="search" placeholder="Search products..." />
+              <select id="categoryFilter">
+                <option value="all">All</option>
+                <option value="fashion">Fashion</option>
+                <option value="tech">Tech</option>
+                <option value="home">Home</option>
+                <option value="accessories">Accessories</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-grid" id="productGrid"></div>
+        </section>
+
+        <section class="promo-banner container glass-panel">
+          <div>
+            <span class="eyebrow">Limited offer</span>
+            <h3>Buy 2 + get 1 free bundle</h3>
+          </div>
+          <a href="#shop" class="primary-btn">Grab the deal</a>
+        </section>
+
+        <section class="why-us container" id="about">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Why customers choose us</span>
+              <h2>Minimal. Premium. Reliable.</h2>
+            </div>
+          </div>
+
+          <div class="info-grid">
+            <div class="glass-panel info-card">
+              <span>01</span>
+              <h3>Curated drops</h3>
+              <p>Fresh products selected to match contemporary lifestyle and design trends.</p>
+            </div>
+            <div class="glass-panel info-card">
+              <span>02</span>
+              <h3>Elegant experience</h3>
+              <p>Every section is built for mobile comfort, clean browsing, and conversion.</p>
+            </div>
+            <div class="glass-panel info-card">
+              <span>03</span>
+              <h3>Fast support</h3>
+              <p>Our team helps with order questions, delivery updates, and product guidance.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer container">
+        <div>
+          <div class="brand-wrap">
+            <div class="brand-mark">T</div>
+            <div>
+              <div class="brand-name">TASUZ</div>
+              <div class="brand-sub">SHOP</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p>© 2026 Tasuz Shop</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">Instagram</a>
+          <a href="#">Telegram</a>
+          <a href="#">Support</a>
+        </div>
+      </footer>
+    </div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+      <div class="cart-header">
+        <div>
+          <span class="eyebrow">Your cart</span>
+          <h3>Shopping bag</h3>
+        </div>
+        <button class="close-btn" id="closeCartBtn" aria-label="Close cart">×</button>
+      </div>
+
+      <div class="cart-items" id="cartItems"></div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="subtotalValue">$0</strong>
+        </div>
+        <div class="summary-row">
+          <span>Delivery</span>
+          <strong id="deliveryValue">$0</strong>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <strong id="totalValue">$0</strong>
+        </div>
+      </div>
+
+      <form id="checkoutForm" class="checkout-form">
+        <input type="text" name="name" placeholder="Full name" required />
+        <input type="tel" name="phone" placeholder="Phone number" required />
+        <textarea name="address" rows="3" placeholder="Delivery address" required></textarea>
+        <button type="submit" class="primary-btn full-width">Pay with PayMe</button>
+      </form>
+    </aside>
+
+    <div class="floating-bar" id="floatingBar">
+      <div class="bar-product-count">
+        <span class="small-label">Cart</span>
+        <strong id="floatingCount">0 items</strong>
+      </div>
+      <div class="bar-total">
+        <span class="small-label">Total</span>
+        <strong id="floatingTotal">$0</strong>
+      </div>
+      <button id="floatingCartBtn" class="primary-btn">Open cart</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
