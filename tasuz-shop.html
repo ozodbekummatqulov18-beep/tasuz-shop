@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tasuz Shop</title>
+    <meta name="description" content="Tasuz Shop — premium catalog with admin dashboard and demo PayMe checkout" />
+    <style>
+      :root {
+        --bg: #edf3ff;
+        --panel: rgba(255, 255, 255, 0.56);
+        --text: #17213c;
+        --muted: #5d698b;
+        --primary: #6f7cff;
+        --primary-strong: #4b5ef0;
+        --accent: #5fe4d0;
+        --shadow: 0 24px 60px rgba(49, 63, 122, 0.13);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(111, 124, 255, 0.18), transparent 22%),
+          radial-gradient(circle at bottom right, rgba(95, 228, 208, 0.2), transparent 28%),
+          linear-gradient(180deg, #f8faff 0%, #eff4ff 100%);
+        color: var(--text);
+      }
+
+      img { display: block; max-width: 100%; }
+      a { text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      button { cursor: pointer; }
+      input, select, textarea {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(76, 90, 143, 0.12);
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--text);
+      }
+      textarea { resize: vertical; }
+
+      .container { width: min(1200px, calc(100% - 30px)); margin: 0 auto; }
+      .glass {
+        background: var(--panel);
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: var(--shadow);
+      }
+
+      .promo-bar {
+        text-align: center;
+        color: white;
+        padding: 0.8rem 1rem;
+        background: linear-gradient(90deg, var(--primary), #7d72ff, var(--accent));
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+      }
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 0;
+      }
+
+      .brand-wrap { display: flex; align-items: center; gap: 0.8rem; }
+      .brand-mark {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        font-weight: 800;
+      }
+      .brand-name { font-weight: 800; letter-spacing: 0.18em; }
+      .brand-sub { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--muted); }
+      .nav-links { display: flex; gap: 1.3rem; }
+      .nav-links a { color: var(--muted); font-weight: 600; }
+      .nav-actions { display: flex; gap: 0.7rem; }
+      .icon-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(59, 70, 120, 0.12);
+        position: relative;
+      }
+      #cartBadge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        min-width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        font-size: 0.62rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 2rem;
+        padding: 2rem 0 2.7rem;
+      }
+      .hero-copy, .hero-visual {
+        padding: clamp(1.5rem, 3vw, 2.7rem);
+        border-radius: 26px;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--primary-strong);
+        font-weight: 800;
+        font-size: 0.72rem;
+      }
+      .hero-copy h1 {
+        font-size: clamp(2.7rem, 5vw, 5rem);
+        line-height: 1;
+        margin: 0.8rem 0 1rem;
+        letter-spacing: -0.08em;
+      }
+      .hero-copy p { color: var(--muted); line-height: 1.7; }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        margin: 1.5rem 0;
+      }
+      .primary-btn, .secondary-btn, .text-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        padding: 0.95rem 1.4rem;
+        font-weight: 700;
+      }
+      .primary-btn {
+        background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+        color: white;
+        box-shadow: 0 18px 28px rgba(85, 96, 212, 0.32);
+      }
+      .secondary-btn {
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(59, 70, 120, 0.12);
+        color: var(--text);
+      }
+      .text-link {
+        background: rgba(111, 124, 255, 0.08);
+        color: var(--primary-strong);
+      }
+      .hero-metrics {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        padding: 0;
+        margin: 1.5rem 0 0;
+      }
+      .hero-metrics strong { display: block; font-size: 1.5rem; }
+      .hero-metrics span { color: var(--muted); font-size: 0.8rem; }
+
+      .product-showcase {
+        position: relative;
+        width: 100%;
+        min-height: 520px;
+        display: grid;
+        place-items: center;
+      }
+      .product-showcase img {
+        width: min(100%, 520px);
+        height: 500px;
+        object-fit: cover;
+        border-radius: 28px;
+        box-shadow: 0 30px 70px rgba(61, 73, 140, 0.22);
+      }
+      .floating-tag {
+        position: absolute;
+        display: inline-flex;
+        padding: 0.7rem 1rem;
+        border-radius: 999px;
+        color: white;
+        font-weight: 800;
+      }
+      .tag-one {
+        top: 26px;
+        left: 30px;
+        background: linear-gradient(135deg, #4a5ef0, #8d8dff);
+      }
+      .tag-two {
+        right: 26px;
+        bottom: 100px;
+        background: linear-gradient(135deg, #ff8a7a, #ff5a7e);
+      }
+      .showcase-card {
+        position: absolute;
+        left: 18px;
+        bottom: 26px;
+        min-width: 170px;
+        padding: 1rem 1.2rem;
+        background: rgba(20, 24, 42, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 18px;
+        color: white;
+      }
+      .showcase-card span { opacity: 0.8; font-size: 0.8rem; }
+      .showcase-card strong { font-size: 1.8rem; }
+
+      .feature-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        padding-bottom: 2rem;
+      }
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.2rem 1.3rem;
+        border-radius: 20px;
+      }
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: rgba(111, 124, 255, 0.1);
+        font-size: 1.5rem;
+      }
+      .feature-item strong, .info-card h3, .product-card h3 { display: block; margin-bottom: 0.25rem; }
+      .feature-item small { color: var(--muted); }
+
+      .categories, .shop, .why-us { padding: 2rem 0; }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 1rem;
+        margin-bottom: 1.4rem;
+      }
+      .section-head h2 {
+        margin: 0.5rem 0 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+        letter-spacing: -0.07em;
+      }
+      .category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+      .category-card {
+        min-height: 172px;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: 1.2rem;
+        border-radius: 24px;
+        color: white;
+      }
+      .category-card-asus {
+        background: linear-gradient(180deg, rgba(111, 124, 255, 0.25), rgba(255, 255, 255, 0.32)), url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      }
+      .category-card-phone {
+        background: linear-gradient(180deg, rgba(95, 228, 208, 0.25), rgba(255, 255, 255, 0.32)), url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      }
+      .category-card-clothing {
+        background: linear-gradient(180deg, rgba(255, 178, 124, 0.25), rgba(255, 255, 255, 0.32)), url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      }
+      .category-card-watch {
+        background: linear-gradient(180deg, rgba(143, 111, 255, 0.25), rgba(255, 255, 255, 0.32)), url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      }
+      .category-card span, .category-card strong { position: relative; z-index: 1; }
+      .category-card strong { font-size: 1.22rem; }
+
+      .shop-tools { display: flex; align-items: center; gap: 0.8rem; width: min(430px, 100%); }
+      .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+      .product-card {
+        border-radius: 24px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.56);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 20px 30px rgba(52, 66, 125, 0.12);
+      }
+      .product-image-wrap { position: relative; }
+      .product-card img { width: 100%; height: 240px; object-fit: cover; }
+      .product-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(255, 255, 255, 0.7);
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 800;
+      }
+      .product-body { padding: 1rem; }
+      .product-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-bottom: 0.7rem;
+      }
+      .product-card h3 { margin: 0; font-size: 1.08rem; }
+      .price { color: var(--primary-strong); font-weight: 800; }
+      .product-card p { color: var(--muted); font-size: 0.9rem; margin: 0 0 1rem; }
+      .product-footer { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; margin-top: auto; }
+      .rating { color: #f0ae2e; font-weight: 700; }
+      .product-card .secondary-btn { flex: 1; padding: 0.8rem 0.9rem; font-size: 0.9rem; }
+
+      .promo-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin: 2rem auto;
+        padding: 1.5rem 1.8rem;
+        border-radius: 26px;
+      }
+      .promo-banner h3 { font-size: clamp(1.8rem, 3vw, 2.8rem); margin: 0.5rem 0 0; }
+
+      .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+      .info-card { padding: 1.4rem; border-radius: 22px; }
+      .info-card span {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: rgba(111, 124, 255, 0.12);
+        color: var(--primary-strong);
+        font-weight: 800;
+        margin-bottom: 0.9rem;
+      }
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.5rem 0 2.5rem;
+        color: var(--muted);
+      }
+      .footer-links { display: flex; gap: 1rem; }
+
+      .cart-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(420px, 100%);
+        height: 100vh;
+        background: rgba(245, 248, 255, 0.96);
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: -28px 0 80px rgba(36, 45, 89, 0.18);
+        transform: translateX(105%);
+        transition: transform 0.3s ease;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(18px);
+      }
+      .cart-drawer.open { transform: translateX(0); }
+      .cart-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.2rem 1.2rem 0.8rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      }
+      .cart-header h3 { margin: 0.4rem 0 0; font-size: 1.5rem; }
+      .close-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.04);
+        font-size: 1.5rem;
+      }
+      .cart-items { padding: 1rem 1.2rem; flex: 1; overflow-y: auto; }
+      .cart-item {
+        display: grid;
+        grid-template-columns: 72px 1fr auto;
+        gap: 0.8rem;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.48);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 18px;
+        padding: 0.75rem;
+        margin-bottom: 0.8rem;
+      }
+      .cart-item img { width: 72px; height: 72px; object-fit: cover; border-radius: 12px; }
+      .cart-item h4 { margin: 0 0 0.2rem; }
+      .item-meta, .item-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.7rem;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .item-controls { justify-content: flex-start; margin-top: 0.4rem; }
+      .qty-btn { width: 28px; height: 28px; border-radius: 8px; background: rgba(111, 124, 255, 0.08); }
+      .item-price {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.6rem;
+      }
+      .remove-btn { background: transparent; color: #e15959; }
+      .cart-summary { padding: 1rem 1.2rem 0.5rem; border-top: 1px solid rgba(0, 0, 0, 0.04); }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.7rem;
+        color: var(--muted);
+      }
+      .summary-row.total {
+        margin-top: 0.8rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.04);
+        color: var(--text);
+        font-size: 1.08rem;
+      }
+      .checkout-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0 1.2rem 1.2rem;
+      }
+      .full-width { width: 100%; }
+
+      .floating-bar {
+        position: fixed;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        width: min(600px, calc(100% - 20px));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 1rem;
+        background: rgba(17, 20, 37, 0.75);
+        border-radius: 22px;
+        box-shadow: 0 22px 60px rgba(13, 17, 38, 0.24);
+        color: white;
+        z-index: 30;
+        backdrop-filter: blur(18px);
+      }
+      .small-label { opacity: 0.7; font-size: 0.7rem; }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        top: 36px;
+        transform: translateX(-50%) translateY(-20px);
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        background: rgba(17, 20, 37, 0.9);
+        color: white;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 100;
+      }
+      .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+      .admin-shell { padding: 2rem 0 4rem; }
+      .auth-card {
+        max-width: 420px;
+        margin: 60px auto;
+        padding: 2rem;
+        border-radius: 24px;
+      }
+      .auth-card h2 { margin-top: 0; }
+      .stack-form { display: flex; flex-direction: column; gap: 0.8rem; }
+      .hidden { display: none !important; }
+      .admin-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.2rem 1.4rem;
+        border-radius: 22px;
+        margin-bottom: 1.2rem;
+      }
+      .admin-topbar h2 { margin: 0.5rem 0 0; }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+      }
+      .stat-card { padding: 1.2rem; border-radius: 20px; }
+      .stat-card span { color: var(--muted); }
+      .stat-card strong { display: block; font-size: 2rem; margin-top: 0.3rem; }
+      .admin-content {
+        display: grid;
+        grid-template-columns: 1fr 1.55fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+      }
+      .panel { padding: 1rem; border-radius: 20px; }
+      .panel-header { margin-bottom: 0.9rem; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { padding: 0.8rem 0.65rem; text-align: left; border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+      .danger-btn { background: rgba(255, 100, 100, 0.12); color: #d64f4f; border-radius: 10px; padding: 0.55rem 0.8rem; }
+      .small { padding: 0.55rem 0.8rem; font-size: 0.8rem; }
+      .order-item { border-radius: 18px; padding: 1rem; margin-bottom: 0.8rem; }
+      .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .status-badge {
+        background: rgba(95, 228, 208, 0.15);
+        color: #0d8d72;
+        border-radius: 999px;
+        padding: 0.3rem 0.7rem;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+      .button-row { display: flex; gap: 0.7rem; }
+
+      @media (max-width: 980px) {
+        .hero, .feature-strip, .product-grid, .category-grid, .info-grid, .admin-content, .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .hero { grid-template-columns: 1fr; }
+        .nav-links { display: none; }
+      }
+      @media (max-width: 640px) {
+        .feature-strip, .product-grid, .category-grid, .info-grid, .admin-content, .stats-grid { grid-template-columns: 1fr; }
+        .section-head, .promo-banner, .footer, .admin-topbar { flex-direction: column; align-items: flex-start; }
+        .shop-tools { width: 100%; flex-direction: column; }
+        .floating-bar { width: calc(100% - 18px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="promo-bar">Yetkazib berish 120$ dan yuqori bo'lsa bepul • New season collection is live</div>
+
+    <div id="shopView">
+      <nav class="navbar container">
+        <div class="brand-wrap">
+          <div class="brand-mark">T</div>
+          <div>
+            <div class="brand-name">TASUZ</div>
+            <div class="brand-sub">SHOP</div>
+          </div>
+        </div>
+
+        <div class="nav-links">
+          <a href="#home">Bosh sahifa</a>
+          <a href="#shop">Mahsulotlar</a>
+          <a href="#new">Yangi</a>
+          <a href="#about">Biz haqimizda</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="icon-btn" id="adminToggle" aria-label="Admin">⚙️</button>
+          <button class="icon-btn cart-trigger" aria-label="Cart">
+            🛒 <span id="cartBadge">0</span>
+          </button>
+        </div>
+      </nav>
+
+      <main id="home">
+        <section class="hero container">
+          <div class="hero-copy glass">
+            <span class="eyebrow">Yangi kolleksiya</span>
+            <h1>Bugunlik ehtiyojlaringiz uchun zamonaviy tanlov.</h1>
+            <p>ASUS kompyuterlar, telefonlar, kiyim va qo'l soatlari — barchasi bir joyda, zamonaviy va shaffof dizaynda.</p>
+            <div class="hero-actions">
+              <a href="#shop" class="primary-btn">Hozir xarid qiling</a>
+              <a href="#new" class="secondary-btn">Yangi mahsulotlar</a>
+            </div>
+            <ul class="hero-metrics">
+              <li><strong>25k+</strong><span>mamnun mijoz</span></li>
+              <li><strong>4.9/5</strong><span>baholash</span></li>
+              <li><strong>48h</strong><span>tez yetkazib berish</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-visual glass">
+            <div class="product-showcase">
+              <div class="floating-tag tag-one">Yangi</div>
+              <div class="floating-tag tag-two">-30%</div>
+              <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80" alt="Showcase" />
+              <div class="showcase-card"><span>Signature Set</span><strong>$149</strong></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="feature-strip container">
+          <div class="feature-item glass">
+            <span class="feature-icon">⚡</span>
+            <div><strong>Tez yetkazib berish</strong><small>Butun O'zbekistonda</small></div>
+          </div>
+          <div class="feature-item glass">
+            <span class="feature-icon">🔒</span>
+            <div><strong>Xavfsiz to'lov</strong><small>PayMe demo</small></div>
+          </div>
+          <div class="feature-item glass">
+            <span class="feature-icon">♻️</span>
+            <div><strong>Ekologik paket</strong><small>Qayta ishlatiladigan material</small></div>
+          </div>
+        </section>
+
+        <section class="categories container" id="new">
+          <div class="section-head">
+            <div><span class="eyebrow">Kategoriyalar</span><h2>O'zingizga mosini tanlang</h2></div>
+            <a href="#shop" class="text-link">Barchasini ko'ring</a>
+          </div>
+          <div class="category-grid">
+            <div class="category-card category-card-asus glass"><span>Asus kompyuterlar</span><strong>18 ta mahsulot</strong></div>
+            <div class="category-card category-card-phone glass"><span>Telefonlar</span><strong>22 ta mahsulot</strong></div>
+            <div class="category-card category-card-clothing glass"><span>Kiyim</span><strong>30 ta mahsulot</strong></div>
+            <div class="category-card category-card-watch glass"><span>Qo'l soatlari</span><strong>14 ta mahsulot</strong></div>
+          </div>
+        </section>
+
+        <section class="shop container" id="shop">
+          <div class="section-head">
+            <div><span class="eyebrow">Mashhur mahsulotlar</span><h2>Yangi kelganlar</h2></div>
+            <div class="shop-tools">
+              <input id="searchInput" type="search" placeholder="Mahsulot qidiring..." />
+              <select id="categoryFilter">
+                <option value="all">Hammasi</option>
+                <option value="asus">Asus kompyuterlar</option>
+                <option value="phones">Telefonlar</option>
+                <option value="clothing">Kiyim</option>
+                <option value="watches">Qo'l soatlari</option>
+              </select>
+            </div>
+          </div>
+          <div class="product-grid" id="productGrid"></div>
+        </section>
+
+        <section class="promo-banner container glass">
+          <div><span class="eyebrow">Chegirma</span><h3>2 ta mahsulot olib 1 tasini bepul olish</h3></div>
+          <a href="#shop" class="primary-btn">Keling, olishga</a>
+        </section>
+
+        <section class="why-us container" id="about">
+          <div class="section-head">
+            <div><span class="eyebrow">Nega biz?</span><h2>Minimal. Premium. Ishonchli.</h2></div>
+          </div>
+          <div class="info-grid">
+            <div class="info-card glass"><span>01</span><h3>Tanlangan mahsulotlar</h3><p>Modern va sifatli mahsulotlar maxsus tanlovga asoslangan.</p></div>
+            <div class="info-card glass"><span>02</span><h3>Zayiflashmagan tajriba</h3><p>Mobil qurilmalarda ham qulay, tez va oson xarid qilish uchun yaratilgan.</p></div>
+            <div class="info-card glass"><span>03</span><h3>Tez qo'llab-quvvatlash</h3><p>Mijozlar uchun buyurtma, yetkazib berish va savollar bo'yicha yordamlashamiz.</p></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer container">
+        <div class="brand-wrap">
+          <div class="brand-mark">T</div>
+          <div>
+            <div class="brand-name">TASUZ</div>
+            <div class="brand-sub">SHOP</div>
+          </div>
+        </div>
+        <div>© 2026 Tasuz Shop</div>
+        <div class="footer-links"><a href="#">Instagram</a><a href="#">Telegram</a><a href="#">Support</a></div>
+      </footer>
+    </div>
+
+    <div id="adminView" class="hidden admin-shell">
+      <div class="container">
+        <div id="loginView" class="auth-card glass">
+          <h2>Admin panel</h2>
+          <p>Login</p>
+          <form id="loginForm" class="stack-form">
+            <input type="text" name="username" value="admin" required />
+            <input type="password" name="password" value="admin123" required />
+            <button type="submit" class="primary-btn full-width">Kirish</button>
+          </form>
+        </div>
+
+        <div id="dashboardView" class="hidden">
+          <header class="admin-topbar glass">
+            <div><span class="eyebrow">Tasuz Shop</span><h2>Admin panel</h2></div>
+            <button id="logoutBtn" class="secondary-btn">Chiqish</button>
+          </header>
+
+          <section class="stats-grid">
+            <div class="stat-card glass"><span>Mahsulotlar</span><strong id="productsCount">0</strong></div>
+            <div class="stat-card glass"><span>Buyurtmalar</span><strong id="ordersCount">0</strong></div>
+            <div class="stat-card glass"><span>Kategoriya</span><strong id="categoriesCount">0</strong></div>
+          </section>
+
+          <div class="admin-content">
+            <section class="panel glass">
+              <div class="panel-header"><h3>Mahsulot qo'shish / tahrirlash</h3></div>
+              <form id="productForm" class="stack-form">
+                <input type="hidden" name="id" />
+                <input type="text" name="name" placeholder="Mahsulot nomi" required />
+                <select name="category">
+                  <option value="asus">Asus kompyuterlar</option>
+                  <option value="phones">Telefonlar</option>
+                  <option value="clothing">Kiyim</option>
+                  <option value="watches">Qo'l soatlari</option>
+                </select>
+                <input type="number" name="price" min="0" step="0.01" placeholder="Narxi" required />
+                <input type="text" name="badge" placeholder="Badge" value="New" />
+                <input type="url" name="image" placeholder="Rasm URL" required />
+                <textarea name="description" rows="4" placeholder="Mahsulot tavsifi" required></textarea>
+                <div class="button-row">
+                  <button type="submit" class="primary-btn">Saqlash</button>
+                  <button type="button" id="resetFormBtn" class="secondary-btn">Tozalash</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="panel glass">
+              <div class="panel-header"><h3>Mahsulotlar ro'yxati</h3></div>
+              <div class="table-wrap"><table><thead><tr><th>Nom</th><th>Kategoriya</th><th>Narx</th><th>Harakat</th></tr></thead><tbody id="productTable"></tbody></table></div>
+            </section>
+          </div>
+
+          <section class="panel glass">
+            <div class="panel-header"><h3>Buyurtmalar</h3></div>
+            <div id="ordersList"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+      <div class="cart-header">
+        <div><span class="eyebrow">Sizning savatingiz</span><h3>Savat</h3></div>
+        <button class="close-btn" id="closeCartBtn">×</button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-summary">
+        <div class="summary-row"><span>Umumiy</span><strong id="subtotalValue">$0</strong></div>
+        <div class="summary-row"><span>Yetkazib berish</span><strong id="deliveryValue">$0</strong></div>
+        <div class="summary-row total"><span>Jami</span><strong id="totalValue">$0</strong></div>
+      </div>
+      <form id="checkoutForm" class="checkout-form">
+        <input type="text" name="name" placeholder="Ismingiz" required />
+        <input type="tel" name="phone" placeholder="Telefon raqami" required />
+        <textarea name="address" rows="3" placeholder="Yetkazib berish manzili" required></textarea>
+        <button type="submit" class="primary-btn full-width">PayMe bilan to'lash</button>
+      </form>
+    </aside>
+
+    <div class="floating-bar">
+      <div><span class="small-label">Savat</span><strong id="floatingCount">0 mahsulot</strong></div>
+      <div><span class="small-label">Jami</span><strong id="floatingTotal">$0</strong></div>
+      <button id="floatingCartBtn" class="primary-btn">Savatni ochish</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const defaultProducts = [
+        { id: 1, name: 'ASUS VivoBook 15', category: 'asus', categoryLabel: 'Asus kompyuterlar', price: 799, rating: 4.8, badge: 'Yangi', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80', description: 'Zaychnali va tezkor 15.6" dizayndagi kompyuter.' },
+        { id: 2, name: 'ASUS ZenBook 14', category: 'asus', categoryLabel: 'Asus kompyuterlar', price: 1099, rating: 4.9, badge: 'Premium', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80', description: 'Yengil, shaffof va professional ishlashga mo\'ljallangan model.' },
+        { id: 3, name: 'iPhone 15 Pro', category: 'phones', categoryLabel: 'Telefonlar', price: 1199, rating: 4.9, badge: 'Trend', image: 'https://images.unsplash.com/photo-1671725779142-64f3e7f4ca47?auto=format&fit=crop&w=900&q=80', description: 'Kuchli chip, premium tasvir va zamonaviy dizayn.' },
+        { id: 4, name: 'Samsung Galaxy S24', category: 'phones', categoryLabel: 'Telefonlar', price: 999, rating: 4.7, badge: 'Best', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80', description: 'Zarur barcha xususiyatlar bilan optimal narx.' },
+        { id: 5, name: 'Smart Premium Ko\'ylak', category: 'clothing', categoryLabel: 'Kiyim', price: 129, rating: 4.6, badge: 'New', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80', description: 'Kundalik shim va professional ko\'rinish uchun ideal.' },
+        { id: 6, name: 'Classic Denim Jacket', category: 'clothing', categoryLabel: 'Kiyim', price: 159, rating: 4.7, badge: 'Hot', image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80', description: 'Quyoshli kunlar uchun ko\'k rangli zamonaviy kurtka.' },
+        { id: 7, name: 'Rolex Oyster Date', category: 'watches', categoryLabel: 'Qo\'l soatlari', price: 1999, rating: 5, badge: 'Luxury', image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=900&q=80', description: 'Premium suyuq va elegant dizaynli zamonaviy soat.' },
+        { id: 8, name: 'Casio Sport Watch', category: 'watches', categoryLabel: 'Qo\'l soatlari', price: 249, rating: 4.8, badge: 'Sport', image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=900&q=80', description: 'Harakatli hayot uchun ishonchli va mustahkam soat.' }
+      ];
+
+      const cart = JSON.parse(localStorage.getItem('tasuzCart')) || [];
+      const orders = JSON.parse(localStorage.getItem('tasuzOrders')) || [];
+      const shopProducts = JSON.parse(localStorage.getItem('tasuzProducts')) || defaultProducts;
+
+      const productGrid = document.getElementById('productGrid');
+      const cartItems = document.getElementById('cartItems');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartBadge = document.getElementById('cartBadge');
+      const floatingCount = document.getElementById('floatingCount');
+      const floatingTotal = document.getElementById('floatingTotal');
+      const subtotalValue = document.getElementById('subtotalValue');
+      const deliveryValue = document.getElementById('deliveryValue');
+      const totalValue = document.getElementById('totalValue');
+      const searchInput = document.getElementById('searchInput');
+      const categoryFilter = document.getElementById('categoryFilter');
+      const toast = document.getElementById('toast');
+
+      function money(value) { return `$${Number(value).toFixed(2)}`; }
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.remove('show'), 1800);
+      }
+      function saveProducts() { localStorage.setItem('tasuzProducts', JSON.stringify(shopProducts)); }
+      function saveCart() { localStorage.setItem('tasuzCart', JSON.stringify(cart)); }
+      function saveOrders() { localStorage.setItem('tasuzOrders', JSON.stringify(orders)); }
+      function getCartCount() { return cart.reduce((sum, item) => sum + item.quantity, 0); }
+      function getCartSubtotal() { return cart.reduce((sum, item) => sum + item.quantity * item.price, 0); }
+
+      function renderProducts() {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        const category = categoryFilter?.value || 'all';
+        const filtered = shopProducts.filter((product) => {
+          const matchesCategory = category === 'all' || product.category === category;
+          const matchesQuery = !query || product.name.toLowerCase().includes(query) || product.description.toLowerCase().includes(query);
+          return matchesCategory && matchesQuery;
+        });
+
+        productGrid.innerHTML = filtered.map((product) => `
+          <article class="product-card">
+            <div class="product-image-wrap">
+              <span class="product-badge">${product.badge || 'New'}</span>
+              <img src="${product.image}" alt="${product.name}" />
+            </div>
+            <div class="product-body">
+              <div class="product-row">
+                <h3>${product.name}</h3>
+                <span class="price">${money(product.price)}</span>
+              </div>
+              <p>${product.description}</p>
+              <div class="product-footer">
+                <span class="rating">★ ${product.rating}</span>
+                <button class="secondary-btn" data-add-to-cart="${product.id}">Savatga</button>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        document.querySelectorAll('[data-add-to-cart]').forEach((btn) => {
+          btn.addEventListener('click', () => addToCart(Number(btn.dataset.addToCart)));
+        });
+      }
+
+      function addToCart(productId) {
+        const product = shopProducts.find((item) => item.id === productId);
+        if (!product) return;
+        const found = cart.find((item) => item.id === productId);
+        if (found) found.quantity += 1;
+        else cart.push({ ...product, quantity: 1 });
+        saveCart();
+        renderCart();
+        showToast(`${product.name} savatga qo'shildi`);
+      }
+
+      function updateCartItem(productId, change) {
+        const item = cart.find((i) => i.id === productId);
+        if (!item) return;
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          const idx = cart.findIndex((i) => i.id === productId);
+          cart.splice(idx, 1);
+        }
+        saveCart();
+        renderCart();
+      }
+
+      function removeCartItem(productId) {
+        const idx = cart.findIndex((i) => i.id === productId);
+        if (idx >= 0) cart.splice(idx, 1);
+        saveCart();
+        renderCart();
+      }
+
+      function renderCart() {
+        if (!cart.length) {
+          cartItems.innerHTML = '<div class="empty-cart">Savat bo\'sh.</div>';
+        } else {
+          cartItems.innerHTML = cart.map((item) => `
+            <div class="cart-item">
+              <img src="${item.image}" alt="${item.name}" />
+              <div>
+                <h4>${item.name}</h4>
+                <div class="item-meta"><span>${money(item.price)}</span><span>${item.categoryLabel || item.category}</span></div>
+                <div class="item-controls"><button class="qty-btn" data-decrease="${item.id}">-</button><span>${item.quantity}</span><button class="qty-btn" data-increase="${item.id}">+</button></div>
+              </div>
+              <div class="item-price"><strong>${money(item.quantity * item.price)}</strong><button class="remove-btn" data-remove="${item.id}">O'chirish</button></div>
+            </div>
+          `).join('');
+        }
+
+        const subtotal = getCartSubtotal();
+        const delivery = subtotal > 0 ? 12 : 0;
+        const total = subtotal + delivery;
+        cartBadge.textContent = getCartCount();
+        floatingCount.textContent = `${getCartCount()} mahsulot`;
+        floatingTotal.textContent = money(total);
+        subtotalValue.textContent = money(subtotal);
+        deliveryValue.textContent = money(delivery);
+        totalValue.textContent = money(total);
+
+        document.querySelectorAll('[data-increase]').forEach((btn) => btn.addEventListener('click', () => updateCartItem(Number(btn.dataset.increase), 1)));
+        document.querySelectorAll('[data-decrease]').forEach((btn) => btn.addEventListener('click', () => updateCartItem(Number(btn.dataset.decrease), -1)));
+        document.querySelectorAll('[data-remove]').forEach((btn) => btn.addEventListener('click', () => removeCartItem(Number(btn.dataset.remove))));
+      }
+
+      function openCart() {
+        cartDrawer.classList.add('open');
+        cartDrawer.setAttribute('aria-hidden', 'false');
+      }
+      function closeCart() {
+        cartDrawer.classList.remove('open');
+        cartDrawer.setAttribute('aria-hidden', 'true');
+      }
+
+      document.querySelector('.cart-trigger').addEventListener('click', openCart);
+      document.getElementById('floatingCartBtn').addEventListener('click', openCart);
+      document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+      searchInput.addEventListener('input', renderProducts);
+      categoryFilter.addEventListener('change', renderProducts);
+
+      document.getElementById('checkoutForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+        const address = form.address.value.trim();
+
+        if (!name || !phone || !address || !cart.length) {
+          showToast("Barcha maydonlar to'ldirilsin va savat bo'sh bo'lmasin");
+          return;
+        }
+
+        const total = getCartSubtotal() + (getCartSubtotal() > 0 ? 12 : 0);
+        orders.push({
+          id: `tasuz-${Date.now()}`,
+          customer: { name, phone, address },
+          items: cart.map((i) => ({ id: i.id, name: i.name, quantity: i.quantity, price: i.price })),
+          amount: total,
+          status: 'paid',
+          createdAt: new Date().toISOString()
+        });
+        saveOrders();
+        cart.length = 0;
+        saveCart();
+        renderCart();
+        form.reset();
+        closeCart();
+        showToast(`To'lov qabul qilindi. Order: ${orders[orders.length - 1].id}`);
+      });
+
+      const loginView = document.getElementById('loginView');
+      const dashboardView = document.getElementById('dashboardView');
+      const productForm = document.getElementById('productForm');
+      const productTable = document.getElementById('productTable');
+      const productsCount = document.getElementById('productsCount');
+      const ordersCount = document.getElementById('ordersCount');
+      const categoriesCount = document.getElementById('categoriesCount');
+      const ordersList = document.getElementById('ordersList');
+      const adminToggle = document.getElementById('adminToggle');
+
+      function renderAdminTable() {
+        productTable.innerHTML = shopProducts.map((product) => `
+          <tr>
+            <td>${product.name}</td>
+            <td>${product.categoryLabel || product.category}</td>
+            <td>${money(product.price)}</td>
+            <td>
+              <button class="secondary-btn small" data-admin-edit="${product.id}">Tahrirlash</button>
+              <button class="danger-btn small" data-admin-delete="${product.id}">O'chirish</button>
+            </td>
+          </tr>
+        `).join('');
+
+        document.querySelectorAll('[data-admin-edit]').forEach((button) => {
+          button.addEventListener('click', () => editAdminProduct(Number(button.dataset.adminEdit)));
+        });
+        document.querySelectorAll('[data-admin-delete]').forEach((button) => {
+          button.addEventListener('click', () => deleteAdminProduct(Number(button.dataset.adminDelete)));
+        });
+      }
+
+      function renderAdminOrders() {
+        if (!orders.length) {
+          ordersList.innerHTML = '<div class="empty-state">Buyurtma mavjud emas</div>';
+          return;
+        }
+
+        ordersList.innerHTML = orders.map((order) => `
+          <div class="order-item glass">
+            <div class="order-header"><strong>${order.id}</strong><span class="status-badge">${order.status || 'paid'}</span></div>
+            <p><b>Mijoz:</b> ${order.customer?.name || '-'}</p>
+            <p><b>Telefon:</b> ${order.customer?.phone || '-'}</p>
+            <p><b>Manzil:</b> ${order.customer?.address || '-'}</p>
+            <p><b>Jami:</b> ${money(order.amount || 0)}</p>
+            <ul>${(order.items || []).map((item) => `<li>${item.name} × ${item.quantity}</li>`).join('')}</ul>
+          </div>
+        `).join('');
+      }
+
+      function updateAdminStats() {
+        productsCount.textContent = String(shopProducts.length);
+        ordersCount.textContent = String(orders.length);
+        categoriesCount.textContent = '4';
+      }
+
+      function loadAdminDashboard() {
+        renderAdminTable();
+        renderAdminOrders();
+        updateAdminStats();
+      }
+
+      function openAdminPanel() {
+        document.getElementById('shopView').classList.add('hidden');
+        document.getElementById('adminView').classList.remove('hidden');
+        if (!dashboardView.classList.contains('hidden')) {
+          loadAdminDashboard();
+        }
+      }
+
+      function closeAdminPanel() {
+        document.getElementById('adminView').classList.add('hidden');
+        document.getElementById('shopView').classList.remove('hidden');
+      }
+
+      function loginAdmin(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const username = form.username.value.trim();
+        const password = form.password.value.trim();
+
+        if (username === 'admin' && password === 'admin123') {
+          loginView.classList.add('hidden');
+          dashboardView.classList.remove('hidden');
+          loadAdminDashboard();
+        } else {
+          showToast("Noto'g'ri login yoki parol");
+        }
+      }
+
+      function logoutAdmin() {
+        dashboardView.classList.add('hidden');
+        loginView.classList.remove('hidden');
+        productForm.reset();
+        closeAdminPanel();
+      }
+
+      function saveAdminProduct(event) {
+        event.preventDefault();
+        const formData = new FormData(productForm);
+        const id = Number(formData.get('id')) || Date.now();
+        const payload = {
+          id,
+          name: String(formData.get('name')).trim(),
+          category: String(formData.get('category')).trim(),
+          categoryLabel: {
+            asus: 'Asus kompyuterlar',
+            phones: 'Telefonlar',
+            clothing: 'Kiyim',
+            watches: 'Qo\'l soatlari'
+          }[String(formData.get('category'))] || 'Mahsulot',
+          price: Number(formData.get('price')) || 0,
+          badge: String(formData.get('badge')).trim() || 'New',
+          image: String(formData.get('image')).trim(),
+          description: String(formData.get('description')).trim(),
+          rating: 4.8
+        };
+
+        const index = shopProducts.findIndex((item) => item.id === id);
+        if (index >= 0) shopProducts[index] = payload;
+        else shopProducts.push(payload);
+
+        saveProducts();
+        renderProducts();
+        loadAdminDashboard();
+        productForm.reset();
+        showToast('Mahsulot saqlandi');
+      }
+
+      function editAdminProduct(productId) {
+        const product = shopProducts.find((item) => item.id === productId);
+        if (!product) return;
+        productForm.id.value = product.id;
+        productForm.name.value = product.name;
+        productForm.category.value = product.category;
+        productForm.price.value = product.price;
+        productForm.badge.value = product.badge || 'New';
+        productForm.image.value = product.image;
+        productForm.description.value = product.description;
+      }
+
+      function deleteAdminProduct(productId) {
+        const idx = shopProducts.findIndex((item) => item.id === productId);
+        if (idx >= 0) {
+          shopProducts.splice(idx, 1);
+          saveProducts();
+          renderProducts();
+          loadAdminDashboard();
+          showToast('Mahsulot o\'chirildi');
+        }
+      }
+
+      document.getElementById('loginForm').addEventListener('submit', loginAdmin);
+      document.getElementById('logoutBtn').addEventListener('click', logoutAdmin);
+      adminToggle.addEventListener('click', () => {
+        if (loginView.classList.contains('hidden')) {
+          closeAdminPanel();
+        } else {
+          openAdminPanel();
+        }
+      });
+      document.getElementById('resetFormBtn').addEventListener('click', () => productForm.reset());
+      productForm.addEventListener('submit', saveAdminProduct);
+
+      renderProducts();
+      renderCart();
+      loadAdminDashboard();
+    </script>
+  </body>
+</html>
